@@ -1,0 +1,10 @@
+{
+  "name": "eudiw-shop",
+  "private": true,
+  "scripts": {
+    "deploy": "wrangler pages deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4"
+  }
+}

@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>eudiw.shop – Merch with a high level of assurance</title>
+<meta name="description" content="The unofficial gift shop for the European Digital Identity Wallet. Selectively disclosed, cryptographically questionable, eIDAS-2.0-adjacent merch.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='8' y='22' width='84' height='60' rx='14' fill='%2314215c'/><rect x='56' y='42' width='36' height='20' rx='8' fill='%23ffcc00'/><circle cx='68' cy='52' r='4' fill='%2314215c'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f4ec;
+    --surface: #ffffff;
+    --ink: #14215c;
+    --ink-soft: #4a5384;
+    --line: #dcd6c4;
+    --accent: #ffcc00;
+    --accent-ink: #14215c;
+    --hero-bg: #14215c;
+    --hero-ink: #f7f4ec;
+    --ok: #1f9d6b;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+    --sans: "Space Grotesk", system-ui, sans-serif;
+    --radius: 18px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0c1236;
+      --surface: #151d4a;
+      --ink: #eef0ff;
+      --ink-soft: #a9b0dc;
+      --line: #2a3470;
+      --hero-bg: #070b24;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--sans); font-size: 17px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+  .mono { font-family: var(--mono); }
+
+  /* ---------- header ---------- */
+  header.top {
+    background: var(--hero-bg); color: var(--hero-ink);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 16px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 20px; text-decoration: none; letter-spacing: -.02em; }
+  .logo b { color: var(--accent); font-weight: 700; }
+  .nav ul { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; font-size: 15px; }
+  .nav ul a { text-decoration: none; opacity: .8; }
+  .nav ul a:hover { opacity: 1; color: var(--accent); }
+  .loa {
+    font-family: var(--mono); font-size: 12px; padding: 6px 10px; border-radius: 999px;
+    border: 1px solid rgba(255,204,0,.5); color: var(--accent); white-space: nowrap;
+  }
+
+  /* ---------- hero ---------- */
+  .hero { background: var(--hero-bg); color: var(--hero-ink); padding: 72px 0 96px; overflow: hidden; position: relative; }
+  .hero::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; align-items: center; position: relative; }
+  .eyebrow { font-family: var(--mono); font-size: 13px; color: var(--accent); letter-spacing: .04em; }
+  h1 { font-size: clamp(40px, 6vw, 68px); line-height: 1.02; letter-spacing: -.035em; margin: 14px 0 22px; }
+  h1 em { font-style: normal; color: var(--accent); }
+  .lead { font-size: 19px; max-width: 34em; opacity: .85; margin: 0 0 32px; }
+  .btns { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; padding: 14px 22px; border-radius: 12px;
+    font: 600 16px var(--sans); text-decoration: none; cursor: pointer; border: 0;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary { background: var(--accent); color: var(--accent-ink); box-shadow: 0 6px 0 #b38f00; }
+  .btn-primary:active { transform: translateY(3px); box-shadow: 0 2px 0 #b38f00; }
+  .btn-ghost { background: transparent; color: var(--hero-ink); border: 1.5px solid rgba(255,255,255,.3); }
+
+  /* credential stack */
+  .stack { position: relative; height: 380px; perspective: 1200px; }
+  .vc {
+    position: absolute; left: 50%; width: 330px; max-width: 86vw; aspect-ratio: 1.586;
+    border-radius: 20px; padding: 20px 22px; color: #fff;
+    box-shadow: 0 24px 50px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.25);
+    transition: transform .45s cubic-bezier(.2,.8,.2,1);
+    display: flex; flex-direction: column; justify-content: space-between;
+    font-family: var(--mono); font-size: 12px;
+  }
+  .vc .vc-title { font-family: var(--sans); font-weight: 700; font-size: 20px; letter-spacing: -.01em; }
+  .vc .row { display: flex; justify-content: space-between; opacity: .9; }
+  .vc .chip { width: 40px; height: 30px; border-radius: 6px; background: linear-gradient(135deg,#ffe680,#c9a100); }
+  .vc-1 { background: linear-gradient(135deg,#2b3fb0,#14215c); transform: translate(-50%, 0) rotate(-8deg); top: 10px; }
+  .vc-2 { background: linear-gradient(135deg,#ff7a59,#c2306b); transform: translate(-50%, 0) rotate(3deg); top: 80px; }
+  .vc-3 { background: linear-gradient(135deg,#ffd84d,#f2a900); color: #14215c; transform: translate(-50%, 0) rotate(-2deg); top: 150px; }
+  .stack:hover .vc-1 { transform: translate(-72%, -20px) rotate(-14deg); }
+  .stack:hover .vc-2 { transform: translate(-30%, 0) rotate(8deg); }
+  .stack:hover .vc-3 { transform: translate(-50%, 30px) rotate(0deg); }
+  .tick { color: #7dffb8; }
+  .vc-3 .tick { color: #0b6b43; }
+  .redacted { background: currentColor; border-radius: 3px; color: inherit; opacity: .55; display: inline-block; width: 70px; height: 10px; vertical-align: middle; }
+
+  /* ---------- ticker ---------- */
+  .ticker { background: var(--accent); color: var(--accent-ink); overflow: hidden; border-block: 2px solid var(--accent-ink); }
+  .ticker-track { display: flex; gap: 40px; padding: 12px 0; width: max-content; animation: scroll 40s linear infinite; font-family: var(--mono); font-weight: 600; font-size: 14px; white-space: nowrap; }
+  @keyframes scroll { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .ticker-track { animation: none; } .vc { transition: none; } }
+
+  /* ---------- sections ---------- */
+  section { padding: 96px 0; }
+  .sec-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 40px; flex-wrap: wrap; }
+  h2 { font-size: clamp(30px, 4vw, 44px); letter-spacing: -.03em; line-height: 1.08; margin: 6px 0 0; }
+  .sec-head p { max-width: 30em; color: var(--ink-soft); margin: 0; }
+  .label { font-family: var(--mono); font-size: 13px; color: var(--ink-soft); }
+
+  /* products */
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .product {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    overflow: hidden; display: flex; flex-direction: column;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .product:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(20,33,92,.14); }
+  .art {
+    aspect-ratio: 4/3; display: grid; place-items: center; position: relative;
+    font-size: 84px; line-height: 1;
+  }
+  .art .fmt {
+    position: absolute; top: 14px; left: 14px; font: 600 11px var(--mono);
+    background: rgba(255,255,255,.85); color: #14215c; padding: 4px 8px; border-radius: 6px;
+  }
+  .art .new {
+    position: absolute; top: 14px; right: 14px; font: 700 11px var(--mono);
+    background: #14215c; color: var(--accent); padding: 4px 8px; border-radius: 6px;
+  }
+  .p-body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .p-body h3 { margin: 0; font-size: 20px; letter-spacing: -.01em; }
+  .p-body p { margin: 0; color: var(--ink-soft); font-size: 15px; flex: 1; }
+  .claims { font: 12px var(--mono); color: var(--ink-soft); border-top: 1px dashed var(--line); padding-top: 10px; }
+  .claims span { display: block; }
+  .buy { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 6px; }
+  .price { font: 600 20px var(--mono); }
+  .price.hidden { letter-spacing: .1em; opacity: .5; }
+  .disclose {
+    font: 600 13px var(--mono); padding: 9px 12px; border-radius: 10px; cursor: pointer;
+    border: 1.5px solid var(--ink); background: transparent; color: var(--ink);
+  }
+  .disclose:hover { background: var(--ink); color: var(--bg); }
+  .disclose.done { border-color: var(--ok); color: var(--ok); background: transparent; cursor: default; }
+
+  /* rfc policy */
+  .policy { background: var(--surface); border-block: 1px solid var(--line); }
+  .rfc {
+    font-family: var(--mono); font-size: 15px; line-height: 1.8; background: var(--bg);
+    border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; overflow-x: auto;
+  }
+  .rfc .kw { background: var(--accent); color: var(--accent-ink); padding: 0 5px; border-radius: 4px; font-weight: 600; }
+  .rfc .c { color: var(--ink-soft); }
+  .two { display: grid; grid-template-columns: .8fr 1.2fr; gap: 48px; align-items: start; }
+
+  /* countdown */
+  .launch { background: var(--hero-bg); color: var(--hero-ink); text-align: center; }
+  .launch h2 { margin-bottom: 12px; }
+  .launch p { opacity: .8; max-width: 36em; margin: 0 auto 36px; }
+  .count { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+  .count div {
+    min-width: 110px; padding: 18px 14px; border-radius: 16px; background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+  }
+  .count strong { display: block; font: 600 44px var(--mono); color: var(--accent); line-height: 1.1; }
+  .count span { font: 12px var(--mono); opacity: .7; text-transform: uppercase; letter-spacing: .08em; }
+
+  /* faq */
+  .faq { max-width: 780px; }
+  details { border-bottom: 1px solid var(--line); padding: 20px 0; }
+  summary { cursor: pointer; font-weight: 700; font-size: 19px; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font-family: var(--mono); color: var(--ink-soft); }
+  details[open] summary::after { content: "−"; }
+  details p { color: var(--ink-soft); margin: 12px 0 0; }
+
+  footer { border-top: 1px solid var(--line); padding: 40px 0 56px; font-size: 14px; color: var(--ink-soft); }
+  .foot { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .foot p { margin: 0; max-width: 46em; }
+
+  /* toast */
+  .toast {
+    position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 140%);
+    background: #14215c; color: #f7f4ec; padding: 14px 18px; border-radius: 12px;
+    font: 14px var(--mono); box-shadow: 0 12px 30px rgba(0,0,0,.3);
+    transition: transform .3s ease; max-width: calc(100vw - 32px); z-index: 10;
+    border-left: 4px solid var(--accent);
+  }
+  .toast.show { transform: translate(-50%, 0); }
+
+  /* responsive */
+  @media (max-width: 900px) {
+    .hero-grid, .two { grid-template-columns: 1fr; }
+    .grid { grid-template-columns: repeat(2, 1fr); }
+    .stack { height: 330px; }
+    .nav ul { display: none; }
+  }
+  @media (max-width: 600px) {
+    .wrap { padding: 0 16px; }
+    .grid { grid-template-columns: 1fr; }
+    .hero { padding: 48px 0 64px; }
+    section { padding: 64px 0; }
+    .loa { display: none; }
+    .rfc { padding: 20px; font-size: 13px; }
+    .count div { min-width: 72px; }
+    .count strong { font-size: 30px; }
+    .vc { width: 280px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap nav">
+    <a href="#" class="logo" aria-label="eudiw.shop home">
+      <svg width="30" height="30" viewBox="0 0 100 100" aria-hidden="true"><rect x="8" y="22" width="84" height="60" rx="14" fill="none" stroke="#ffcc00" stroke-width="8"/><rect x="56" y="42" width="36" height="20" rx="8" fill="#ffcc00"/><circle cx="68" cy="52" r="4" fill="#14215c"/></svg>
+      <span>eudiw<b>.shop</b></span>
+    </a>
+    <ul>
+      <li><a href="#merch">Merch</a></li>
+      <li><a href="#policy">Shop policy</a></li>
+      <li><a href="#launch">Launch</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <span class="loa">LoA: high (vibes)</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">// eIDAS 2.0 compliant*  &nbsp;*not really</div>
+      <h1>Merch with a <em>high level of assurance.</em></h1>
+      <p class="lead">The unofficial gift shop for the European Digital Identity Wallet. Every item is selectively disclosed, cryptographically questionable and 100% unlinkable from your dignity.</p>
+      <div class="btns">
+        <a href="#merch" class="btn btn-primary">Present credentials →</a>
+        <a href="#faq" class="btn btn-ghost">Read the ARF (please don't)</a>
+      </div>
+    </div>
+    <div class="stack" aria-hidden="true">
+      <div class="vc vc-1">
+        <div class="row"><span>PID · dc+sd-jwt</span><span class="tick">✓ verified</span></div>
+        <div class="vc-title">Person Identification Data</div>
+        <div class="row"><span>family_name: <span class="redacted"></span></span><div class="chip"></div></div>
+      </div>
+      <div class="vc vc-2">
+        <div class="row"><span>org.iso.18013.5.1.mDL</span><span class="tick">✓ valid</span></div>
+        <div class="vc-title">age_over_18: true</div>
+        <div class="row"><span>birth_date: <span class="redacted"></span></span><span>mdoc</span></div>
+      </div>
+      <div class="vc vc-3">
+        <div class="row"><span>issuer: eudiw.shop</span><span class="tick">✓ trusted*</span></div>
+        <div class="vc-title">Certified Wallet Nerd</div>
+        <div class="row"><span>knows_what_SD-JWT_means: true</span><span>QEAA</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track" id="ticker"></div>
+</div>
+
+<section id="merch">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="label">GET /credential_offer?type=merch</div>
+        <h2>The collection</h2>
+      </div>
+      <p>Prices are selectively disclosed. Tap <span class="mono">disclose</span> to reveal one claim at a time, the way the regulation intended.</p>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section class="policy" id="policy">
+  <div class="wrap two">
+    <div>
+      <div class="label">RFC 2119 edition</div>
+      <h2>Shop policy</h2>
+      <p style="color:var(--ink-soft)">We wrote our terms the only way an identity nerd can read them: with normative keywords in capital letters.</p>
+    </div>
+    <div class="rfc">
+      <div>1. Orders <span class="kw">MUST</span> arrive eventually.</div>
+      <div>2. Shipping <span class="kw">SHOULD</span> be faster than a Member State implementation.</div>
+      <div>3. Returns <span class="kw">MAY</span> be accepted if the item is unworn and unrevoked.</div>
+      <div>4. Customers <span class="kw">MUST NOT</span> ask us to explain the difference between EAA and QEAA at parties.</div>
+      <div>5. We <span class="kw">SHALL</span> only request the data we need.<br><span class="c">&nbsp;&nbsp;&nbsp;# that's your shoe size. we don't need your shoe size.</span></div>
+      <div>6. Holder binding <span class="kw">IS RECOMMENDED</span> for all hoodies.</div>
+    </div>
+  </div>
+</section>
+
+<section class="launch" id="launch">
+  <div class="wrap">
+    <div class="label" style="color:var(--accent)">wallet_o_clock.exp</div>
+    <h2 id="launch-title">Grand opening when the wallets do</h2>
+    <p id="launch-text">EU Member States have to offer their citizens a digital identity wallet by the end of 2026. That's our launch date too. We're about as confident as they are.</p>
+    <div class="count" id="count">
+      <div><strong id="d">--</strong><span>days</span></div>
+      <div><strong id="h">--</strong><span>hours</span></div>
+      <div><strong id="m">--</strong><span>min</span></div>
+      <div><strong id="s">--</strong><span>sec</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="label">POST /presentation_definition</div>
+    <h2 style="margin-bottom:24px">Frequently requested claims</h2>
+    <div class="faq">
+      <details>
+        <summary>Is this official?</summary>
+        <p>Absolutely not. We're a Relying Party for jokes. eudiw.shop is a fan project and has no affiliation with the European Commission, any Member State or any actual wallet provider.</p>
+      </details>
+      <details>
+        <summary>Can I pay with my EUDI Wallet?</summary>
+        <p>Your PID isn't legal tender. Yet. We'd accept a valid <span class="mono">age_over_18</span> proof, but only as a compliment.</p>
+      </details>
+      <details>
+        <summary>Where's the shopping cart?</summary>
+        <p>It's planned for ARF version 2.0, after a public consultation, three discussion papers and a GitHub issue with 400 comments.</p>
+      </details>
+      <details>
+        <summary>Do you ship to all Member States?</summary>
+        <p>We ship anywhere that has a trusted list. Interoperability isn't guaranteed and neither is the parcel.</p>
+      </details>
+      <details>
+        <summary>What happens to my personal data?</summary>
+        <p>Nothing. We don't collect any. There's no form here, no tracking and no cart. That's data minimisation, or as we call it, laziness.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <p><strong style="color:var(--ink)">eudiw.shop</strong> is a parody and fan project. It isn't affiliated with, endorsed by or connected to the European Commission, any EU institution or Member State, or anyone who has actually read every implementing act.</p>
+    <p class="mono">issued_at: 2026 · signed with ♥ · status: valid</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+  const products = [
+    { e:"🧦", name:"Selective Disclosure Socks", desc:"Only reveal the ankle the verifier actually needs. The other one stays salted and hashed.", fmt:"dc+sd-jwt", price:"12,00", bg:"linear-gradient(135deg,#c7d2ff,#8fa2ff)", claims:["size: disclosed","color: ~undisclosed~"], isNew:true },
+    { e:"☕", name:"Zero-Knowledge Mug", desc:"Proves it contains coffee without revealing whether it's decaf. Your colleagues will never know.", fmt:"zkp", price:"16,00", bg:"linear-gradient(135deg,#ffe3b3,#ffb35c)", claims:["contains_coffee: true","is_decaf: [proof only]"] },
+    { e:"🍺", name:"age_over_18 Bottle Opener", desc:"Proves you're of age without disclosing that you're actually 47.", fmt:"mso_mdoc", price:"9,00", bg:"linear-gradient(135deg,#ffd1dc,#ff8fab)", claims:["age_over_18: true","birth_date: not requested"] },
+    { e:"🥸", name:"Pseudonym Kit", desc:"Mustache and glasses. Unlinkable across relying parties, unless they look closely.", fmt:"pseudonym", price:"14,00", bg:"linear-gradient(135deg,#d6f5e3,#7fd6a8)", claims:["unlinkable: true","convincing: false"] },
+    { e:"🖊️", name:"Qualified Ballpoint Signature", desc:"Every doodle has the legal effect of a handwritten signature. Wait…", fmt:"QES", price:"7,00", bg:"linear-gradient(135deg,#e6e0ff,#b3a1ff)", claims:["qualified: allegedly","ink: blue"] },
+    { e:"🐶", name:"ARF Squeaky Toy", desc:"The Architecture Reference Framework, but for dogs. Updated more often than your dog can chew it. Arf.", fmt:"v1.x", price:"11,00", bg:"linear-gradient(135deg,#fff1a8,#ffd84d)", claims:["version: latest-ish","squeak: normative"], isNew:true },
+    { e:"👛", name:"Wallet Unit Attestation", desc:"A real leather wallet that cryptographically vouches for itself. Very confident. Slightly smug.", fmt:"WUA", price:"39,00", bg:"linear-gradient(135deg,#f5d5c0,#d99a73)", claims:["key_storage: pocket","certified: by itself"] },
+    { e:"🎉", name:"Relying Party Hats", desc:"Pack of six. Data minimisation applies: please request only the hats you need.", fmt:"openid4vp", price:"8,00", bg:"linear-gradient(135deg,#ffc9f0,#ff7ad9)", claims:["count: 6","purpose: party"] },
+    { e:"🧥", name:"Status List Hoodie", desc:"Bit 0: cozy. Bit 1: revoked (it's in the wash). Check the list before wearing.", fmt:"token-status-list", price:"49,00", bg:"linear-gradient(135deg,#bfe9ff,#5cc2ff)", claims:["status: valid","holder_binding: hood"] },
+  ];
+
+  const grid = document.getElementById("grid");
+  products.forEach((p, i) => {
+    const el = document.createElement("article");
+    el.className = "product";
+    el.innerHTML = `
+      <div class="art" style="background:${p.bg}">
+        <span class="fmt">${p.fmt}</span>${p.isNew ? '<span class="new">NEW</span>' : ''}
+        <span aria-hidden="true">${p.e}</span>
+      </div>
+      <div class="p-body">
+        <h3>${p.name}</h3>
+        <p>${p.desc}</p>
+        <div class="claims">${p.claims.map(c => `<span>› ${c}</span>`).join("")}</div>
+        <div class="buy">
+          <span class="price hidden" id="price-${i}" aria-label="price undisclosed">€ ••,••</span>
+          <button class="disclose" data-i="${i}">disclose price</button>
+        </div>
+      </div>`;
+    grid.appendChild(el);
+  });
+
+  const toast = document.getElementById("toast");
+  let toastTimer;
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 3200);
+  }
+
+  const quips = [
+    "✓ Claim disclosed. Verifier is satisfied. Your wallet is not.",
+    "✓ Disclosure accepted. Salt was delicious.",
+    "✓ Price revealed. Everything else stays private.",
+    "✓ Presentation valid. Shop opens soon, no cart yet.",
+  ];
+  grid.addEventListener("click", e => {
+    const btn = e.target.closest(".disclose");
+    if (!btn || btn.classList.contains("done")) return;
+    const i = btn.dataset.i;
+    const price = document.getElementById("price-" + i);
+    price.textContent = "€ " + products[i].price;
+    price.classList.remove("hidden");
+    price.removeAttribute("aria-label");
+    btn.textContent = "✓ disclosed";
+    btn.classList.add("done");
+    showToast(quips[Math.floor(Math.random() * quips.length)]);
+  });
+
+  // ticker
+  const terms = ["SD-JWT VC","mso_mdoc","OpenID4VP","OpenID4VCI","PID","QEAA","EAA","Wallet Unit Attestation","Trusted Lists","Selective Disclosure","Holder Binding","Relying Party","ISO 18013-5","Token Status List","ARF","Level of Assurance: High","Pseudonyms","Zero-Knowledge Proofs","QES"];
+  const track = document.getElementById("ticker");
+  const line = terms.map(t => `<span>${t} ✦</span>`).join("");
+  track.innerHTML = line + line;
+
+  // countdown to wallet o'clock (end of 2026, CET)
+  const target = new Date("2027-01-01T00:00:00+01:00").getTime();
+  const pad = n => String(n).padStart(2, "0");
+  function tick() {
+    const diff = target - Date.now();
+    if (diff <= 0) {
+      document.getElementById("launch-title").textContent = "It's wallet o'clock.";
+      document.getElementById("launch-text").textContent = "The deadline has passed. Is your wallet in your app store yet? Ours is in your pocket, made of leather.";
+      document.getElementById("count").style.display = "none";
+      return;
+    }
+    document.getElementById("d").textContent = Math.floor(diff / 864e5);
+    document.getElementById("h").textContent = pad(Math.floor(diff / 36e5) % 24);
+    document.getElementById("m").textContent = pad(Math.floor(diff / 6e4) % 60);
+    document.getElementById("s").textContent = pad(Math.floor(diff / 1e3) % 60);
+    setTimeout(tick, 1000);
+  }
+  tick();
+</script>
+</body>
+</html>
