@@ -1,5 +1,9 @@
 name = "eudiw-shop"
 compatibility_date = "2026-11-01"
+routes = [
+  { pattern = "eudiw.shop", custom_domain = true },
+  { pattern = "www.eudiw.shop", custom_domain = true },
+]
 
 [assets]
 directory = "./public"
