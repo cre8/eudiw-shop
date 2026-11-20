@@ -2,7 +2,7 @@
   "name": "eudiw-shop",
   "private": true,
   "scripts": {
-    "deploy": "wrangler pages deploy"
+    "deploy": "wrangler deploy"
   },
   "devDependencies": {
     "wrangler": "^4"
